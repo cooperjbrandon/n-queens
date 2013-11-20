@@ -130,14 +130,34 @@
 
     // Major Diagonals - go from top-left to bottom-right
     // --------------------------------------------------------------
-    // 
+    //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow){
-      return false; // fixme
+      // console.log(majorDiagonalColumnIndexAtFirstRow);
+      // return false; // fixme
+      var matrix = this.rows();
+      var startingRow = 0;
+      var startingCol = majorDiagonalColumnIndexAtFirstRow;
+      while(startingCol < 0 ){
+        startingCol++;
+        startingRow++;
+      }
+      var counter = 0;
+      for (var i = startingRow; i < matrix.length; i++) {
+        if(matrix[i][startingCol] === 1) {counter++; }
+        startingCol++;
+      }
+      return (counter > 1);
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function(){
+      var matrix = this.rows();
+      for (var i = -matrix.length+1; i < matrix.length; i ++) {
+        if(this.hasMajorDiagonalConflictAt(i)){
+          return true;
+        }
+      }
       return false; // fixme
     },
 
