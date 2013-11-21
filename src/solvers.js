@@ -13,9 +13,22 @@
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n rooks placed such that none of them can attack each other
 window.findNRooksSolution = function(n){
-  var solution = undefined; //fixme
-
-  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
+  var solution = new Array(n);
+  for (var r = 0; r < solution.length; r++){
+    solution[r] = new Array (n);
+    for (var k = 0; k < solution[r].length; k++){
+      solution[r][k] = 0;
+    }
+  }
+  var usedColumn = [];
+  for (var i = 0; i < solution.length; i++){
+    var c = Math.floor(Math.random()*n);
+    while (_.contains(usedColumn, c)) {
+      c = Math.floor(Math.random()*n);
+    }
+    solution[i][c] = 1;
+    usedColumn.push(c);
+  }
   return solution;
 };
 
@@ -23,10 +36,43 @@ window.findNRooksSolution = function(n){
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n){
-  var solutionCount = undefined; //fixme
+  var result = [];
+  var fun = function(n, col, badColumn){
+    for (var i = 0; i < col; i++){
+      if (!_.contains(badColumn,i)){
+        var copy = badColumn.slice(0);
+        copy.push(i);
+        if (n !== 1) {
+          fun(n-1, col, copy);
+        } else {
+          result.push(copy);
+        }
+      }
+    }
+  };
+  fun(n, n, []);
+  // var solution = new Array(n);
+  // fun(n, n, []);
+  // for (var r = 0; r < solution.length; r++){
+  //   solution[r] = new Array (n);
+  //   for (var k = 0; k < solution[r].length; k++){
+  //     solution[r][k] = 0;
+  //   }
+  // }
+  // var usedColumn = []; // 0
+  // for (var i = 0; i < solution.length; i++){
+  //   var tempUsedColumn = new Array(n);
+  //   for (var q = 0; q < solution.length; q++){
+  //     if(!_.contains(usedColumn, q)){
+  //       solution[i][q] = 1;
+  //       usedColumn.push(q);
+  //     }
+  //   }
+  // }
 
-  console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
-  return solutionCount;
+
+  return result.length;
+
 };
 
 
