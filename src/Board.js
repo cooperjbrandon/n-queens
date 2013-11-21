@@ -133,8 +133,7 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow){
-      console.log(majorDiagonalColumnIndexAtFirstRow);
-      // console.log(majorDiagonalColumnIndexAtFirstRow);
+
       // return false; // fixme
       var matrix = this.rows();
       var startingRow = 0;
